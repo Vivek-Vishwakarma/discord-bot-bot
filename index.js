@@ -78,7 +78,7 @@ client.on("messageCreate", (msg) => {
     case "copium":
       const copium = new MessageEmbed()
         .setColor("#0099ff")
-        .setDescription(`lol ${args[1]} is breathing copium`)
+        .setDescription(`lol ${args[1]} is breathing copium, May gacha god bless u`)
         .setImage('https://c.tenor.com/1O7jju384zgAAAAC/copium-attack-on-titan.gif')
         .setFooter(`Better luck next time!`)
         .setTimestamp()
