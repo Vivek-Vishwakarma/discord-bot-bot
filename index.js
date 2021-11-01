@@ -31,7 +31,7 @@ client.on("messageCreate", (msg) => {
   switch (args[0]) {
     case "ping":
       msg.channel.send(
-        `Your Ping is ${(Date.now() - msg.createdTimestamp)/1000}ms, BotBot's Ping is ${Math.round(client.ws.ping)}ms.`
+        `Your Ping is ${(Date.now() - msg.createdTimestamp)}ms, BotBot's Ping is ${Math.round(client.ws.ping)}ms.`
       );
       break
     case "clear":
