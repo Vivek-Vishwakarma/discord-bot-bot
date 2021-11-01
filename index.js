@@ -6,6 +6,9 @@ const client = new Client({
 
 const prefix = "v";
 
+const slaps = ["https://i.pinimg.com/originals/fe/39/cf/fe39cfc3be04e3cbd7ffdcabb2e1837b.gif", "https://c.tenor.com/FaXcxpmU3PMAAAAC/anime-slap.gif", "https://i.imgur.com/fm49srQ.gif", "https://i.imgur.com/lYxSTLA.gif"]
+
+
 client.on("ready", () => {
   console.log("Our bot is ready to go!!!!");
 });
@@ -13,7 +16,7 @@ client.on("ready", () => {
 client.on("messageCreate", (msg) => {
   let args = msg.content.substring(prefix.length).split(" ");
   if (msg.content == "kyubi") {
-    msg.channel.send("Amam is sussy baka everyone knows")
+    msg.channel.send("Aman is sussy baka/gay everyone knows")
   }
   if (msg.content == "gay") {
     msg.channel.send("no u")
@@ -44,7 +47,7 @@ client.on("messageCreate", (msg) => {
         .setColor("#0099ff")
         .setTitle("You gave a slap !")
         .setDescription(`${msg.author.username} slaps ${args[1]}`)
-        .setImage('https://i.pinimg.com/originals/fe/39/cf/fe39cfc3be04e3cbd7ffdcabb2e1837b.gif')
+        .setImage(slaps[Math.floor(Math.random() * 4)])
         .setFooter(`Well Enjoy !!`)
         .setTimestamp()
       msg.channel.send({ embeds: [slap] });
@@ -64,7 +67,7 @@ client.on("messageCreate", (msg) => {
         .setColor("#0099ff")
         .setTitle("Good night kids !")
         .setDescription(`${msg.author.username} says gn to ${args[1]}`)
-        .setImage('https://c.tenor.com/VuDFvHzmtPEAAAAd/kanna-sleep.gif')
+        .setImage('https://c.tenor.com/01cElrH1Ed8AAAAM/anime-shiro.gif')
         .setFooter(`Sweet dreams brat !!`)
         .setTimestamp()
       msg.channel.send({ embeds: [gn] });
@@ -75,7 +78,7 @@ client.on("messageCreate", (msg) => {
     case "copium":
       const copium = new MessageEmbed()
         .setColor("#0099ff")
-        .setTitle(`lol ${args[1]} is breathing copium`)
+        .setDescription(`lol ${args[1]} is breathing copium`)
         .setImage('https://c.tenor.com/1O7jju384zgAAAAC/copium-attack-on-titan.gif')
         .setFooter(`Better luck next time!`)
         .setTimestamp()
@@ -85,3 +88,5 @@ client.on("messageCreate", (msg) => {
 });
 
 client.login(process.env.TOKEN);
+
+
