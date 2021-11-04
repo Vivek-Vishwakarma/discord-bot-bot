@@ -10,27 +10,30 @@ const slaps = [
   "https://i.pinimg.com/originals/fe/39/cf/fe39cfc3be04e3cbd7ffdcabb2e1837b.gif",
   "https://c.tenor.com/FaXcxpmU3PMAAAAC/anime-slap.gif",
   "https://i.imgur.com/fm49srQ.gif",
-  "https://i.imgur.com/lYxSTLA.gif"
+  "https://i.imgur.com/lYxSTLA.gif",
 ];
 const bonks = [
   "https://c.tenor.com/CrmEU2LKix8AAAAC/anime-bonk.gif",
   "https://i.gifer.com/origin/d7/d77de33d229370f023a24ca6e4cf6079.gif",
-  "http://imgur.com/gallery/t1a9akh",
-  "https://i.redd.it/wigx0n2dkve11.gif"
+  "https://i.imgur.com/t1a9akh.gif",
+  "https://i.redd.it/wigx0n2dkve11.gif",
 ];
 const gms = [
   "https://c.tenor.com/Jf9m50qfQZ4AAAAM/anime-tired.gif",
   "https://thumbs.gfycat.com/UnknownDevotedCommongonolek-size_restricted.gif",
   "https://c.tenor.com/BIsCQ21cOK4AAAAC/konosuba-good-morning.gif",
-  "https://i.pinimg.com/originals/ac/65/71/ac657196b350449b1b3fd2ee608889d5.gif"
-]
+  "https://i.pinimg.com/originals/ac/65/71/ac657196b350449b1b3fd2ee608889d5.gif",
+];
 const gns = [
   "https://acegif.com/wp-content/gif/anime-sleep-52.gif",
   "https://c.tenor.com/z9aWLYIdx_IAAAAM/anime-animu.gif",
   "https://i.kym-cdn.com/photos/images/newsfeed/000/785/973/16c.gif",
-  "https://c.tenor.com/juNCyZd5Ut4AAAAC/goodnight-goodnight-anime.gif"
-]
-
+  "https://c.tenor.com/juNCyZd5Ut4AAAAC/goodnight-goodnight-anime.gif",
+];
+const diwalis = [
+  "https://www.eventstodayz.com/wp-content/uploads/2020/10/diwali-gif-animation.gif",
+  "https://1.bp.blogspot.com/-yv8BW2m1rBM/XbQr1BFXASI/AAAAAAAAAzY/m6lggYCPnno0K5jp-rGQu6BJW_xwSQK-QCLcBGAsYHQ/s1600/diwali.gif"
+];
 client.on("ready", () => {
   console.log("Our bot is ready to go!!!!");
 });
@@ -38,7 +41,7 @@ client.on("ready", () => {
 client.on("messageCreate", (msg) => {
   let args = msg.content.substring(prefix.length).split(" ");
   if (msg.content == "kyubi") {
-    msg.channel.send("Aman is sussy baka/gay everyone knows");
+    msg.channel.send("Kyubi is sussy baka/gay everyone knows");
   }
   if (msg.content == "gay") {
     msg.channel.send("no u");
@@ -122,6 +125,21 @@ client.on("messageCreate", (msg) => {
         .setFooter(`Better luck next time!`)
         .setTimestamp();
       msg.channel.send({ embeds: [copium] });
+      break;
+    case "diwali":
+      const diwali = new MessageEmbed()
+        .setColor("#0099ff")
+        .setTitle(`Happy Diwali !!`)
+        .setImage(diwalis[Math.floor(Math.random() * 2)])
+        .setTimestamp();
+      msg.channel.send({ embeds: [diwali] });
+      break;
+    case "pfp":
+      const pfp = new MessageEmbed()
+        .setColor("#ff3333")
+        .setImage(msg.author.displayAvatarURL())
+        .setTimestamp();
+      msg.channel.send({ embeds: [pfp] });
       break;
   }
 });
