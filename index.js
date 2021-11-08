@@ -3,9 +3,8 @@ const { Client, Intents, MessageEmbed } = require("discord.js");
 const client = new Client({
   intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
 });
-
+const fetch = require("node-fetch");
 const prefix = "v";
-
 const slaps = [
   "https://i.pinimg.com/originals/fe/39/cf/fe39cfc3be04e3cbd7ffdcabb2e1837b.gif",
   "https://c.tenor.com/FaXcxpmU3PMAAAAC/anime-slap.gif",
@@ -30,15 +29,12 @@ const gns = [
   "https://i.kym-cdn.com/photos/images/newsfeed/000/785/973/16c.gif",
   "https://c.tenor.com/juNCyZd5Ut4AAAAC/goodnight-goodnight-anime.gif",
 ];
-const diwalis = [
-  "https://www.eventstodayz.com/wp-content/uploads/2020/10/diwali-gif-animation.gif",
-  "https://1.bp.blogspot.com/-yv8BW2m1rBM/XbQr1BFXASI/AAAAAAAAAzY/m6lggYCPnno0K5jp-rGQu6BJW_xwSQK-QCLcBGAsYHQ/s1600/diwali.gif"
-];
+
 client.on("ready", () => {
   console.log("Our bot is ready to go!!!!");
 });
 
-client.on("messageCreate", (msg) => {
+client.on("messageCreate", async (msg) => {
   let args = msg.content.substring(prefix.length).split(" ");
   if (msg.content == "kyubi") {
     msg.channel.send("Kyubi is sussy baka/gay everyone knows");
@@ -103,15 +99,37 @@ client.on("messageCreate", (msg) => {
     case "bonk":
       const bonk = new MessageEmbed()
         .setColor("#0099ff")
-        .setTitle("You bonked a horny mf !")
+        .setTitle("You bonked a horny guy !")
         .setDescription(`${msg.author.username} bonked ${args[1]}`)
         .setImage(bonks[Math.floor(Math.random() * 4)])
         .setFooter(`Go to horny jail !!`)
         .setTimestamp();
       msg.channel.send({ embeds: [bonk] });
       break;
+    case "meme":
+      try {
+        const response = await fetch(`https://meme-api.herokuapp.com/gimme/1`);
+        const data = await response.json();
+        data.memes.forEach((element) => {
+          const meme = new MessageEmbed()
+            .setColor("#0099ff")
+            .setTitle("Here is your meme")
+            .setImage(element.url)
+            .setFooter(`Now laugh`)
+            .setTimestamp();
+            msg.channel.send({ embeds: [meme] });
+        });
+      } catch (error) {
+        msg.channel.send("Oops, there was an error fetching the API");
+      }
+      break;
     case "calc":
       msg.channel.send(`${eval(args[1])}`);
+      break;
+    case "hentai":
+      msg.channel.send(
+        `https://nhentai.net/g/${Math.floor(100000 + Math.random() * 900000)}/`
+      );
       break;
     case "copium":
       const copium = new MessageEmbed()
@@ -126,18 +144,10 @@ client.on("messageCreate", (msg) => {
         .setTimestamp();
       msg.channel.send({ embeds: [copium] });
       break;
-    case "diwali":
-      const diwali = new MessageEmbed()
-        .setColor("#0099ff")
-        .setTitle(`Happy Diwali !!`)
-        .setImage(diwalis[Math.floor(Math.random() * 2)])
-        .setTimestamp();
-      msg.channel.send({ embeds: [diwali] });
-      break;
     case "pfp":
       const pfp = new MessageEmbed()
         .setColor("#ff3333")
-        .setImage(msg.author.displayAvatarURL())
+        .setImage(msg.member.displayAvatarURL())
         .setTimestamp();
       msg.channel.send({ embeds: [pfp] });
       break;
