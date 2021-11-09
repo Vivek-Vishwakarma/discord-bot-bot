@@ -3,6 +3,10 @@ const { Client, Intents, MessageEmbed } = require("discord.js");
 const client = new Client({
   intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
 });
+
+const { NHentai } = require('nhentai.js-api');
+const api = new NHentai();
+
 const fetch = require("node-fetch");
 const prefix = "v";
 const slaps = [
@@ -55,8 +59,7 @@ client.on("messageCreate", async (msg) => {
   switch (args[0]) {
     case "ping":
       msg.channel.send(
-        `Your Ping is ${
-          Date.now() - msg.createdTimestamp
+        `Your Ping is ${Date.now() - msg.createdTimestamp
         }ms, BotBot's Ping is ${Math.round(client.ws.ping)}ms.`
       );
       break;
@@ -117,7 +120,7 @@ client.on("messageCreate", async (msg) => {
             .setImage(element.url)
             .setFooter(`Now laugh`)
             .setTimestamp();
-            msg.channel.send({ embeds: [meme] });
+          msg.channel.send({ embeds: [meme] });
         });
       } catch (error) {
         msg.channel.send("Oops, there was an error fetching the API");
@@ -127,9 +130,8 @@ client.on("messageCreate", async (msg) => {
       msg.channel.send(`${eval(args[1])}`);
       break;
     case "hentai":
-      msg.channel.send(
-        `https://nhentai.net/g/${Math.floor(100000 + Math.random() * 900000)}/`
-      );
+      const h = await api.random(true);
+      msg.channel.send(h.url);
       break;
     case "copium":
       const copium = new MessageEmbed()
@@ -151,6 +153,20 @@ client.on("messageCreate", async (msg) => {
         .setTimestamp();
       msg.channel.send({ embeds: [pfp] });
       break;
+    case "scam":
+      const scam = new MessageEmbed()
+        .setColor("#0099ff")
+        .setDescription(
+          `${args[1]}stop scamming !!`
+        )
+        .setImage(
+          "https://c.tenor.com/TJiQDMvpWuoAAAAC/itsascam-scam.gif"
+        )
+        .setFooter(`stfu scammer !!`)
+        .setTimestamp();
+      msg.channel.send({ embeds: [scam] });
+      break;
+      
   }
 });
 
