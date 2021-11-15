@@ -4,34 +4,35 @@ const client = new Client({
   intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
 });
 
-const { NHentai } = require('nhentai.js-api');
+const { NHentai } = require("nhentai.js-api");
 const api = new NHentai();
 
 const fetch = require("node-fetch");
 const prefix = "v";
 const slaps = [
   "https://i.pinimg.com/originals/fe/39/cf/fe39cfc3be04e3cbd7ffdcabb2e1837b.gif",
-  "https://c.tenor.com/FaXcxpmU3PMAAAAC/anime-slap.gif",
+  "https://c.tenor.com/rVXByOZKidMAAAAd/anime-slap.gif",
   "https://i.imgur.com/fm49srQ.gif",
-  "https://i.imgur.com/lYxSTLA.gif",
+  "https://c.tenor.com/PeJyQRCSHHkAAAAC/saki-saki-mukai-naoya.gif",
 ];
 const bonks = [
-  "https://c.tenor.com/CrmEU2LKix8AAAAC/anime-bonk.gif",
+  "https://c.tenor.com/SagUV4yLAfUAAAAd/bonk-anime.gif",
   "https://i.gifer.com/origin/d7/d77de33d229370f023a24ca6e4cf6079.gif",
   "https://i.imgur.com/t1a9akh.gif",
   "https://i.redd.it/wigx0n2dkve11.gif",
+  "https://c.tenor.com/o5rgSZSPZVwAAAAd/jujutsu-kaisen-bonk.gif",
 ];
 const gms = [
-  "https://c.tenor.com/Jf9m50qfQZ4AAAAM/anime-tired.gif",
+  "https://c.tenor.com/pMnESetQE3EAAAAC/ugh-yawn.gif",
   "https://thumbs.gfycat.com/UnknownDevotedCommongonolek-size_restricted.gif",
   "https://c.tenor.com/BIsCQ21cOK4AAAAC/konosuba-good-morning.gif",
   "https://i.pinimg.com/originals/ac/65/71/ac657196b350449b1b3fd2ee608889d5.gif",
 ];
 const gns = [
   "https://acegif.com/wp-content/gif/anime-sleep-52.gif",
-  "https://c.tenor.com/z9aWLYIdx_IAAAAM/anime-animu.gif",
+  "https://c.tenor.com/0WU4kckmSfsAAAAC/anime-animu.gif",
   "https://i.kym-cdn.com/photos/images/newsfeed/000/785/973/16c.gif",
-  "https://c.tenor.com/juNCyZd5Ut4AAAAC/goodnight-goodnight-anime.gif",
+  "https://c.tenor.com/UN3g4U2PeUcAAAAC/bed-sleep.gif",
 ];
 
 client.on("ready", () => {
@@ -59,7 +60,8 @@ client.on("messageCreate", async (msg) => {
   switch (args[0]) {
     case "ping":
       msg.channel.send(
-        `Your Ping is ${Date.now() - msg.createdTimestamp
+        `Your Ping is ${
+          Date.now() - msg.createdTimestamp
         }ms, BotBot's Ping is ${Math.round(client.ws.ping)}ms.`
       );
       break;
@@ -104,7 +106,7 @@ client.on("messageCreate", async (msg) => {
         .setColor("#0099ff")
         .setTitle("You bonked a horny guy !")
         .setDescription(`${msg.author.username} bonked ${args[1]}`)
-        .setImage(bonks[Math.floor(Math.random() * 4)])
+        .setImage(bonks[Math.floor(Math.random() * 5)])
         .setFooter(`Go to horny jail !!`)
         .setTimestamp();
       msg.channel.send({ embeds: [bonk] });
@@ -139,9 +141,7 @@ client.on("messageCreate", async (msg) => {
         .setDescription(
           `lol ${args[1]} is breathing copium, May gacha god bless u`
         )
-        .setImage(
-          "https://c.tenor.com/1O7jju384zgAAAAC/copium-attack-on-titan.gif"
-        )
+        .setImage("https://c.tenor.com/Oe47zgo1FOEAAAAC/copium-luffy.gif")
         .setFooter(`Better luck next time!`)
         .setTimestamp();
       msg.channel.send({ embeds: [copium] });
@@ -156,17 +156,28 @@ client.on("messageCreate", async (msg) => {
     case "scam":
       const scam = new MessageEmbed()
         .setColor("#0099ff")
-        .setDescription(
-          `${args[1]}stop scamming !!`
-        )
+        .setDescription(`${args[1]} stop scamming !!`)
         .setImage(
-          "https://c.tenor.com/TJiQDMvpWuoAAAAC/itsascam-scam.gif"
+          "https://c.tenor.com/PDrJtkWQjmcAAAAC/scam-is-this-a-scam.gif"
         )
         .setFooter(`stfu scammer !!`)
         .setTimestamp();
       msg.channel.send({ embeds: [scam] });
       break;
-      
+    case "random":
+      try {
+        const response = await fetch(`https://nekos.best/api/v1/${args[1]}`);
+        const data = await response.json();
+        const random = new MessageEmbed()
+          .setColor("#0099ff")
+          .setDescription(`${msg.author.username} = ${args[1]}`)
+          .setImage(data.url)
+          .setTimestamp();
+        msg.channel.send({ embeds: [random] });
+      } catch (error) {
+        msg.channel.send("Oops, there was an error fetching the API");
+      }
+      break;
   }
 });
 
