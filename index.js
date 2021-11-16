@@ -178,6 +178,19 @@ client.on("messageCreate", async (msg) => {
         msg.channel.send("Oops, there was an error fetching the API");
       }
       break;
+    case "genshin":
+      if(!args[2]){
+        msg.channel.send(
+          `https://genshin.honeyhunterworld.com/db/${args[1]}/?lang=EN`
+        );
+      }
+      else{
+        msg.channel.send(
+          `https://genshin.honeyhunterworld.com/db/${args[1]}/${args[2]}/?lang=EN`
+        );
+      }
+      
+      break;
   }
 });
 
