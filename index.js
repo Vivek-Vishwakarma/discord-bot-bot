@@ -41,8 +41,8 @@ client.on("ready", () => {
 
 client.on("messageCreate", async (msg) => {
   let args = msg.content.substring(prefix.length).split(" ");
-  if (msg.content == "kyubi") {
-    msg.channel.send("Kyubi is sussy baka/gay everyone knows");
+  if (msg.content == "aman") {
+    msg.channel.send("Aman/Loli is sussy baka/gay everyone knows");
   }
   if (msg.content == "gay") {
     msg.channel.send("no u");
@@ -172,6 +172,7 @@ client.on("messageCreate", async (msg) => {
           .setColor("#0099ff")
           .setDescription(`${msg.author.username} = ${args[1]}`)
           .setImage(data.url)
+          .setFooter(data.anime_name)
           .setTimestamp();
         msg.channel.send({ embeds: [random] });
       } catch (error) {
@@ -179,17 +180,19 @@ client.on("messageCreate", async (msg) => {
       }
       break;
     case "genshin":
-      if(!args[2]){
+      if (!args[2]) {
         msg.channel.send(
           `https://genshin.honeyhunterworld.com/db/${args[1]}/?lang=EN`
         );
-      }
-      else{
+      } else {
         msg.channel.send(
           `https://genshin.honeyhunterworld.com/db/${args[1]}/${args[2]}/?lang=EN`
         );
       }
-      
+    case "say":
+      if (msg.author.bot) return;
+      const SayMessage = msg.content.slice(5).trim();
+      msg.channel.send(SayMessage)
       break;
   }
 });
