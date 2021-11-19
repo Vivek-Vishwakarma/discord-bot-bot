@@ -191,6 +191,7 @@ client.on("messageCreate", async (msg) => {
       }
     case "say":
       if (msg.author.bot) return;
+      msg.delete()
       const SayMessage = msg.content.slice(5).trim();
       msg.channel.send(SayMessage)
       break;
