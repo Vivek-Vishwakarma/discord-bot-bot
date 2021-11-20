@@ -37,6 +37,7 @@ const gns = [
 
 client.on("ready", () => {
   console.log("Our bot is ready to go!!!!");
+  client.user.setActivity('Playing with Loli', { type: 'PLAYING' })
 });
 
 client.on("messageCreate", async (msg) => {
@@ -67,7 +68,7 @@ client.on("messageCreate", async (msg) => {
       break;
     case "clear":
       if (!args[1])
-        msg.reply("Enter number of message u wanna delete u jerk !!");
+      msg.reply("Enter number of message u wanna delete u jerk !!");
       msg.channel.bulkDelete(args[1]);
       msg.channel.send(`cleared ${args[1]} messages`);
       break;
@@ -118,7 +119,7 @@ client.on("messageCreate", async (msg) => {
         data.memes.forEach((element) => {
           const meme = new MessageEmbed()
             .setColor("#0099ff")
-            .setTitle("Here is your meme")
+            .setTitle(element.title)
             .setImage(element.url)
             .setFooter(`Now laugh`)
             .setTimestamp();
@@ -147,9 +148,11 @@ client.on("messageCreate", async (msg) => {
       msg.channel.send({ embeds: [copium] });
       break;
     case "pfp":
+      const mentionedUser = msg.mentions.users.first() || msg.author
       const pfp = new MessageEmbed()
         .setColor("#ff3333")
-        .setImage(msg.member.displayAvatarURL())
+        .setTitle(`${mentionedUser.username}'s profile image`)
+        .setImage(mentionedUser.displayAvatarURL({ format : "png", size : 2048}))
         .setTimestamp();
       msg.channel.send({ embeds: [pfp] });
       break;
@@ -190,10 +193,15 @@ client.on("messageCreate", async (msg) => {
         );
       }
     case "say":
-      if (msg.author.bot) return;
-      msg.delete()
-      const SayMessage = msg.content.slice(5).trim();
-      msg.channel.send(SayMessage)
+      if (msg.channel.id === "745942944552583210") {
+        //745942944552583210 = chill area
+        msg.channel.send("Can't use this command on this channel");
+      } else {
+        if (msg.author.bot) return;
+        msg.delete();
+        const SayMessage = msg.content.slice(5).trim();
+        msg.channel.send(SayMessage);
+      }
       break;
   }
 });
