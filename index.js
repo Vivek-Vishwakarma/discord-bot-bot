@@ -48,6 +48,14 @@ client.on("messageCreate", async (msg) => {
   if (msg.content == "gay") {
     msg.channel.send("no u");
   }
+  // if (msg.content == "xiangling") {
+  //   msg.channel.send(912359253514264646);
+  // }
+  912359253514264646
+  if (msg.content == "vibing") {
+    msg.channel.send("https://c.tenor.com/YE0J1dQlSjcAAAAC/dance-anime.gif");
+  }
+  
   if (msg.content == "loli") {
     const loli = new MessageEmbed()
       .setColor("#0099ff")
@@ -66,6 +74,7 @@ client.on("messageCreate", async (msg) => {
         }ms, BotBot's Ping is ${Math.round(client.ws.ping)}ms.`
       );
       break;
+      
     case "clear":
       if (!args[1])
       msg.reply("Enter number of message u wanna delete u jerk !!");
@@ -192,6 +201,7 @@ client.on("messageCreate", async (msg) => {
           `https://genshin.honeyhunterworld.com/db/${args[1]}/${args[2]}/?lang=EN`
         );
       }
+      break;
     case "say":
       if (msg.channel.id === "745942944552583210") {
         //745942944552583210 = chill area
