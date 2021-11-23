@@ -37,7 +37,7 @@ const gns = [
 
 client.on("ready", () => {
   console.log("Our bot is ready to go!!!!");
-  client.user.setActivity('Playing with Loli', { type: 'PLAYING' })
+  client.user.setActivity("Playing with Loli", { type: "PLAYING" });
 });
 
 client.on("messageCreate", async (msg) => {
@@ -51,11 +51,11 @@ client.on("messageCreate", async (msg) => {
   // if (msg.content == "xiangling") {
   //   msg.channel.send(912359253514264646);
   // }
-  912359253514264646
+  912359253514264646;
   if (msg.content == "vibing") {
     msg.channel.send("https://c.tenor.com/YE0J1dQlSjcAAAAC/dance-anime.gif");
   }
-  
+
   if (msg.content == "loli") {
     const loli = new MessageEmbed()
       .setColor("#0099ff")
@@ -74,10 +74,10 @@ client.on("messageCreate", async (msg) => {
         }ms, BotBot's Ping is ${Math.round(client.ws.ping)}ms.`
       );
       break;
-      
+
     case "clear":
       if (!args[1])
-      msg.reply("Enter number of message u wanna delete u jerk !!");
+        msg.reply("Enter number of message u wanna delete u jerk !!");
       msg.channel.bulkDelete(args[1]);
       msg.channel.send(`cleared ${args[1]} messages`);
       break;
@@ -157,11 +157,11 @@ client.on("messageCreate", async (msg) => {
       msg.channel.send({ embeds: [copium] });
       break;
     case "pfp":
-      const mentionedUser = msg.mentions.users.first() || msg.author
+      const mentionedUser = msg.mentions.users.first() || msg.author;
       const pfp = new MessageEmbed()
         .setColor("#ff3333")
         .setTitle(`${mentionedUser.username}'s profile image`)
-        .setImage(mentionedUser.displayAvatarURL({ format : "png", size : 2048}))
+        .setImage(mentionedUser.displayAvatarURL({ format: "png", size: 2048 }))
         .setTimestamp();
       msg.channel.send({ embeds: [pfp] });
       break;
@@ -201,6 +201,11 @@ client.on("messageCreate", async (msg) => {
           `https://genshin.honeyhunterworld.com/db/${args[1]}/${args[2]}/?lang=EN`
         );
       }
+      break;
+    case "km":
+      msg.channel.send(
+        `https://keqingmains.com/${args[1]}/`
+      );
       break;
     case "say":
       if (msg.channel.id === "745942944552583210") {
