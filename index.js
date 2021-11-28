@@ -76,10 +76,18 @@ client.on("messageCreate", async (msg) => {
       break;
 
     case "clear":
-      if (!args[1])
+      if (!args[1]){
+
         msg.reply("Enter number of message u wanna delete u jerk !!");
-      msg.channel.bulkDelete(args[1]);
-      msg.channel.send(`cleared ${args[1]} messages`);
+      }
+      else if(args[1] >= 100){
+        msg.reply("Fuck you don't delete more than 99 messages !!");
+      }
+      else{
+
+        msg.channel.bulkDelete(args[1]);
+        msg.channel.send(`cleared ${args[1]} messages`);
+      }
       break;
     case "slap":
       const slap = new MessageEmbed()
@@ -176,7 +184,7 @@ client.on("messageCreate", async (msg) => {
         .setTimestamp();
       msg.channel.send({ embeds: [scam] });
       break;
-    case "random":
+    case "r":
       try {
         const response = await fetch(`https://nekos.best/api/v1/${args[1]}`);
         const data = await response.json();
@@ -203,19 +211,30 @@ client.on("messageCreate", async (msg) => {
       }
       break;
     case "km":
-      msg.channel.send(
-        `https://keqingmains.com/${args[1]}/`
-      );
+      msg.channel.send(`https://keqingmains.com/${args[1]}/`);
       break;
     case "say":
-      if (msg.channel.id === "745942944552583210") {
         //745942944552583210 = chill area
-        msg.channel.send("Can't use this command on this channel");
-      } else {
         if (msg.author.bot) return;
         msg.delete();
         const SayMessage = msg.content.slice(5).trim();
         msg.channel.send(SayMessage);
+      break;
+    case "define":
+      try {
+        const meaning = await fetch(
+          `http://api.urbandictionary.com/v0/define?term=${args[1]}`
+        );
+        const data = await meaning.json();
+        const mean = new MessageEmbed()
+          .setColor("#0099ff")
+          .setTitle(`Definition of ${args[1]}`)
+          .setDescription(data.list[args[2] ? args[2] : 0].definition)
+          .setFooter(`Author : ${data.list[args[2] ? args[2] : 0].author}`)
+          .setTimestamp();
+        msg.channel.send({ embeds: [mean] });
+      } catch (error) {
+        msg.channel.send("idk just google it xd");
       }
       break;
   }
