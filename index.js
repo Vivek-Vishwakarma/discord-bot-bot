@@ -76,15 +76,11 @@ client.on("messageCreate", async (msg) => {
       break;
 
     case "clear":
-      if (!args[1]){
-
+      if (!args[1]) {
         msg.reply("Enter number of message u wanna delete u jerk !!");
-      }
-      else if(args[1] >= 100){
+      } else if (args[1] >= 100) {
         msg.reply("Fuck you don't delete more than 99 messages !!");
-      }
-      else{
-
+      } else {
         msg.channel.bulkDelete(args[1]);
         msg.channel.send(`cleared ${args[1]} messages`);
       }
@@ -184,7 +180,7 @@ client.on("messageCreate", async (msg) => {
         .setTimestamp();
       msg.channel.send({ embeds: [scam] });
       break;
-    case "r":
+    case "ran":
       try {
         const response = await fetch(`https://nekos.best/api/v1/${args[1]}`);
         const data = await response.json();
@@ -214,11 +210,11 @@ client.on("messageCreate", async (msg) => {
       msg.channel.send(`https://keqingmains.com/${args[1]}/`);
       break;
     case "say":
-        //745942944552583210 = chill area
-        if (msg.author.bot) return;
-        msg.delete();
-        const SayMessage = msg.content.slice(5).trim();
-        msg.channel.send(SayMessage);
+      //745942944552583210 = chill area
+      if (msg.author.bot) return;
+      msg.delete();
+      const SayMessage = msg.content.slice(5).trim();
+      msg.channel.send(SayMessage);
       break;
     case "define":
       try {
@@ -235,6 +231,23 @@ client.on("messageCreate", async (msg) => {
         msg.channel.send({ embeds: [mean] });
       } catch (error) {
         msg.channel.send("idk just google it xd");
+      }
+      break;
+    case "quote":
+      try {
+        const quotes = await fetch(
+          `https://animechan.vercel.app/api/random`
+        );
+        const data = await quotes.json();
+        const quote = new MessageEmbed()
+          .setColor("#0099ff")
+          .setTitle(`Anime : ${data.anime}`)
+          .setDescription(data.quote)
+          .setFooter(`Character : ${data.character}`)
+          .setTimestamp();
+        msg.channel.send({ embeds: [quote] });
+      } catch (error) {
+        msg.channel.send("No quote available right now !!");
       }
       break;
   }
