@@ -186,13 +186,12 @@ client.on("messageCreate", async (msg) => {
       break;
     case "ran":
       try {
-        const response = await fetch(`https://nekos.best/api/v1/${args[1]}`);
+        const response = await fetch(`https://api.waifu.pics/sfw/${args[1]}`);
         const data = await response.json();
         const random = new MessageEmbed()
           .setColor("#0099ff")
-          .setDescription(`${msg.author.username} = ${args[1]}`)
+          .setDescription(`${msg.author.username} = ${args[1]}  ${args[2] ? args[2] : " "}`)
           .setImage(data.url)
-          .setFooter(data.anime_name)
           .setTimestamp();
         msg.channel.send({ embeds: [random] });
       } catch (error) {
@@ -218,7 +217,7 @@ client.on("messageCreate", async (msg) => {
       if (msg.author.bot) return;
       msg.delete();
       const SayMessage = msg.content.slice(5).trim();
-      msg.channel.send(SayMessage);
+      msg.channel.send(`${msg.author.username} says, ${SayMessage}`);
       break;
     case "define":
       try {
@@ -254,7 +253,7 @@ client.on("messageCreate", async (msg) => {
       break;
     case "waifu":
       try {
-        const response = await fetch(`https://api.waifu.pics/sfw/${args[1] ? args[1] : "waifu"}`);
+        const response = await fetch(`https://api.waifu.pics/${args[1] ? args[1] : "sfw"}/${args[2] ? args[2] : "waifu"}`);
         const data = await response.json();
         const random = new MessageEmbed()
           .setColor("#0099ff")
