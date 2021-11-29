@@ -146,8 +146,12 @@ client.on("messageCreate", async (msg) => {
       msg.channel.send(`${eval(args[1])}`);
       break;
     case "hentai":
-      const h = await api.random(true);
-      msg.channel.send(h.url);
+      if (msg.channel.nsfw) {
+        const h = await api.random(true);
+        msg.channel.send(h.url);
+      } else {
+        msg.reply("Go to nsfw channel u perv !!");
+      }
       break;
     case "copium":
       const copium = new MessageEmbed()
@@ -235,9 +239,7 @@ client.on("messageCreate", async (msg) => {
       break;
     case "quote":
       try {
-        const quotes = await fetch(
-          `https://animechan.vercel.app/api/random`
-        );
+        const quotes = await fetch(`https://animechan.vercel.app/api/random`);
         const data = await quotes.json();
         const quote = new MessageEmbed()
           .setColor("#0099ff")
@@ -250,6 +252,20 @@ client.on("messageCreate", async (msg) => {
         msg.channel.send("No quote available right now !!");
       }
       break;
+    case "waifu":
+      try {
+        const response = await fetch(`https://api.waifu.pics/sfw/${args[1] ? args[1] : "waifu"}`);
+        const data = await response.json();
+        const random = new MessageEmbed()
+          .setColor("#0099ff")
+          .setImage(data.url)
+          .setTimestamp();
+        msg.channel.send({ embeds: [random] });
+      } catch (error) {
+        msg.channel.send("Sorry no waifu for pervert like you !!");
+      }
+      break;
+    //https://api.waifu.pics/sfw/waifu
   }
 });
 
