@@ -190,7 +190,9 @@ client.on("messageCreate", async (msg) => {
         const data = await response.json();
         const random = new MessageEmbed()
           .setColor("#0099ff")
-          .setDescription(`${msg.author.username} = ${args[1]}  ${args[2] ? args[2] : " "}`)
+          .setDescription(
+            `${msg.author.username} = ${args[1]}  ${args[2] ? args[2] : " "}`
+          )
           .setImage(data.url)
           .setTimestamp();
         msg.channel.send({ embeds: [random] });
@@ -253,13 +255,34 @@ client.on("messageCreate", async (msg) => {
       break;
     case "waifu":
       try {
-        const response = await fetch(`https://api.waifu.pics/${args[1] ? args[1] : "sfw"}/${args[2] ? args[2] : "waifu"}`);
+        const response = await fetch(
+          `https://api.waifu.pics/sfw/${args[1] ? args[1] : "waifu"}`
+        );
         const data = await response.json();
-        const random = new MessageEmbed()
+        const waifu = new MessageEmbed()
           .setColor("#0099ff")
           .setImage(data.url)
           .setTimestamp();
-        msg.channel.send({ embeds: [random] });
+        msg.channel.send({ embeds: [waifu] });
+      } catch (error) {
+        msg.channel.send("Sorry no waifu for pervert like you !!");
+      }
+      break;
+    case "nsfw":
+      try {
+        if (msg.channel.nsfw) {
+          const response = await fetch(
+            `https://api.waifu.pics/nsfw/${args[1] ? args[1] : "waifu"}`
+          );
+          const data = await response.json();
+          const random = new MessageEmbed()
+            .setColor("#0099ff")
+            .setImage(data.url)
+            .setTimestamp();
+          msg.channel.send({ embeds: [random] });
+        } else {
+          msg.reply("Go to nsfw channel u perv !!");
+        }
       } catch (error) {
         msg.channel.send("Sorry no waifu for pervert like you !!");
       }
