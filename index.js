@@ -259,35 +259,59 @@ client.on("messageCreate", async (msg) => {
           `https://api.waifu.pics/sfw/${args[1] ? args[1] : "waifu"}`
         );
         const data = await response.json();
-        const waifu = new MessageEmbed()
-          .setColor("#0099ff")
-          .setImage(data.url)
-          .setTimestamp();
-        msg.channel.send({ embeds: [waifu] });
-      } catch (error) {
-        msg.channel.send("Sorry no waifu for pervert like you !!");
-      }
-      break;
-    case "nsfw":
-      try {
-        if (msg.channel.nsfw) {
-          const response = await fetch(
-            `https://api.waifu.pics/nsfw/${args[1] ? args[1] : "waifu"}`
-          );
-          const data = await response.json();
+        if (data.message == "Not Found") {
+          msg.channel.send("Not found");
+        } else {
           const random = new MessageEmbed()
             .setColor("#0099ff")
             .setImage(data.url)
             .setTimestamp();
           msg.channel.send({ embeds: [random] });
-        } else {
-          msg.reply("Go to nsfw channel u perv !!");
         }
       } catch (error) {
         msg.channel.send("Sorry no waifu for pervert like you !!");
       }
+
+      break;
+    case "nsfw":
+      if (msg.channel.nsfw) {
+        try {
+          const response = await fetch(
+            `https://api.waifu.pics/nsfw/${args[1] ? args[1] : "waifu"}`
+          );
+          const data = await response.json();
+          if (data.message == "Not Found") {
+            msg.channel.send("Not found");
+          } else {
+            const random = new MessageEmbed()
+              .setColor("#0099ff")
+              .setImage(data.url)
+              .setTimestamp();
+            msg.channel.send({ embeds: [random] });
+          }
+        } catch (error) {
+          msg.channel.send("Sorry no waifu for pervert like you !!");
+        }
+      } else {
+        msg.reply("Go to nsfw channel u perv !!");
+      }
       break;
     //https://api.waifu.pics/sfw/waifu
+    case "random":
+      try {
+        const response = await fetch(`https://nekos.best/api/v1/${args[1]}`);
+        const data = await response.json();
+        const random = new MessageEmbed()
+          .setColor("#0099ff")
+          .setImage(data.url)
+          .setFooter(data.anime_name)
+          .setTimestamp();
+        msg.channel.send({ embeds: [random] });
+      } catch (error) {
+        msg.channel.send("Sorry no waifu for pervert like you !!");
+      }
+      break;
+      //https://nekos.best/api/v1/smile
   }
 });
 
