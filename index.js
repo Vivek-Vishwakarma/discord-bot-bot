@@ -311,7 +311,44 @@ client.on("messageCreate", async (msg) => {
         msg.channel.send("Sorry no waifu for pervert like you !!");
       }
       break;
-      //https://nekos.best/api/v1/smile
+    //https://nekos.best/api/v1/smile
+    case "profile":
+      const profileUser = msg.mentions.users.first() || msg.author;
+      // const profileUser =  msg.guild.members(msg.mentions.users.first() || msg.guild.members.get(args[0]))
+      const profile = new MessageEmbed()
+        .setColor("#ff3333")
+        .setAuthor(msg.author.username, msg.author.displayAvatarURL())
+        .setTitle(`${profileUser.username}'s profile`)
+        .setThumbnail(profileUser.displayAvatarURL())
+        .addFields(
+          {
+            name: "Joined Discord on",
+            value: profileUser.createdAt.toDateString(),
+          },
+          {
+            name: "Username",
+            value : profileUser.username,
+          }
+        )
+        .setTimestamp();
+      msg.channel.send({ embeds: [profile] });
+      break;
+      //https://covid-api.mmediagroup.fr/v1/cases?country=India
+      case "covid":
+      try {
+        const response = await fetch(`https://covid-api.mmediagroup.fr/v1/cases?country=${args[1]} ${args[2] ? args[2] : " "} ${args[3] ? args[3] : " "}` );
+        const data = await response.json();
+        const covid = new MessageEmbed()
+          .setColor("#0099ff")
+          .setTitle(`Covid cases in ${args[1]}`)
+          
+          .setDescription(`Total conformed cases : ${data.All.confirmed} | Total Deaths : ${data.All.deaths}`)
+          .setTimestamp();
+        msg.channel.send({ embeds: [covid] });
+      } catch (error) {
+        msg.channel.send(error);
+      }
+      break;
   }
 });
 
