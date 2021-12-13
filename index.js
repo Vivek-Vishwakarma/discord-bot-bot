@@ -22,6 +22,12 @@ const bonks = [
   "https://i.redd.it/wigx0n2dkve11.gif",
   "https://c.tenor.com/o5rgSZSPZVwAAAAd/jujutsu-kaisen-bonk.gif",
 ];
+const bdays = [
+  "https://c.tenor.com/RvfqrIGh_skAAAAC/umakanta.gif",
+  "https://c.tenor.com/MGgHPbbIKZkAAAAC/surprised-unsurprised.gif",
+  "https://c.tenor.com/pb5cuuusCKUAAAAC/nico-yazawa-love.gif",
+  "https://c.tenor.com/Ka3CyVdTwXoAAAAC/clannad-nagisa-furukawa.gif"
+]
 const gms = [
   "https://c.tenor.com/pMnESetQE3EAAAAC/ugh-yawn.gif",
   "https://thumbs.gfycat.com/UnknownDevotedCommongonolek-size_restricted.gif",
@@ -274,27 +280,28 @@ client.on("messageCreate", async (msg) => {
 
       break;
     case "nsfw":
-      if (msg.channel.nsfw) {
-        try {
-          const response = await fetch(
-            `https://api.waifu.pics/nsfw/${args[1] ? args[1] : "waifu"}`
-          );
-          const data = await response.json();
-          if (data.message == "Not Found") {
-            msg.channel.send("Not found");
-          } else {
-            const random = new MessageEmbed()
-              .setColor("#0099ff")
-              .setImage(data.url)
-              .setTimestamp();
-            msg.channel.send({ embeds: [random] });
-          }
-        } catch (error) {
-          msg.channel.send("Sorry no waifu for pervert like you !!");
-        }
-      } else {
-        msg.reply("Go to nsfw channel u perv !!");
-      }
+      // if (msg.channel.nsfw) {
+      //   try {
+      //     const response = await fetch(
+      //       `https://api.waifu.pics/nsfw/${args[1] ? args[1] : "waifu"}`
+      //     );
+      //     const data = await response.json();
+      //     if (data.message == "Not Found") {
+      //       msg.channel.send("Not found");
+      //     } else {
+      //       const random = new MessageEmbed()
+      //         .setColor("#0099ff")
+      //         .setImage(data.url)
+      //         .setTimestamp();
+      //       msg.channel.send({ embeds: [random] });
+      //     }
+      //   } catch (error) {
+      //     msg.channel.send("Sorry no waifu for pervert like you !!");
+      //   }
+      // } else {
+      //   msg.reply("Go to nsfw channel u perv !!");
+      // }
+      msg.channel.send("This command is disabled")
       break;
     //https://api.waifu.pics/sfw/waifu
     case "random":
@@ -348,6 +355,16 @@ client.on("messageCreate", async (msg) => {
       } catch (error) {
         msg.channel.send(error);
       }
+      break;
+      case "bday":
+        const bday = new MessageEmbed()
+        .setColor("#0099ff")
+        .setTitle(`Happy Bday ${args[1]}`)
+        .setDescription(`${msg.author.username} says happt bady to  ${args[1]}`)
+        .setImage(bdays[Math.floor(Math.random() * 4)])
+        .setFooter(`It's party time !!`)
+        .setTimestamp();
+      msg.channel.send({ embeds: [bday] });
       break;
   }
 });
