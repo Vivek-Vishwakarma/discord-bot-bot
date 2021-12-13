@@ -360,7 +360,7 @@ client.on("messageCreate", async (msg) => {
         const bday = new MessageEmbed()
         .setColor("#0099ff")
         .setTitle(`Happy Bday Brat`)
-        .setDescription(`${msg.author.username} says happy bady to  ${args[1]}`)
+        .setDescription(`${msg.author.username} says happy bday to  ${args[1]}`)
         .setImage(bdays[Math.floor(Math.random() * 4)])
         .setFooter(`It's party time !!`)
         .setTimestamp();
