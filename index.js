@@ -26,8 +26,8 @@ const bdays = [
   "https://c.tenor.com/RvfqrIGh_skAAAAC/umakanta.gif",
   "https://c.tenor.com/MGgHPbbIKZkAAAAC/surprised-unsurprised.gif",
   "https://c.tenor.com/pb5cuuusCKUAAAAC/nico-yazawa-love.gif",
-  "https://c.tenor.com/Ka3CyVdTwXoAAAAC/clannad-nagisa-furukawa.gif"
-]
+  "https://c.tenor.com/Ka3CyVdTwXoAAAAC/clannad-nagisa-furukawa.gif",
+];
 const gms = [
   "https://c.tenor.com/pMnESetQE3EAAAAC/ugh-yawn.gif",
   "https://thumbs.gfycat.com/UnknownDevotedCommongonolek-size_restricted.gif",
@@ -280,28 +280,27 @@ client.on("messageCreate", async (msg) => {
 
       break;
     case "nsfw":
-      // if (msg.channel.nsfw) {
-      //   try {
-      //     const response = await fetch(
-      //       `https://api.waifu.pics/nsfw/${args[1] ? args[1] : "waifu"}`
-      //     );
-      //     const data = await response.json();
-      //     if (data.message == "Not Found") {
-      //       msg.channel.send("Not found");
-      //     } else {
-      //       const random = new MessageEmbed()
-      //         .setColor("#0099ff")
-      //         .setImage(data.url)
-      //         .setTimestamp();
-      //       msg.channel.send({ embeds: [random] });
-      //     }
-      //   } catch (error) {
-      //     msg.channel.send("Sorry no waifu for pervert like you !!");
-      //   }
-      // } else {
-      //   msg.reply("Go to nsfw channel u perv !!");
-      // }
-      msg.channel.send("This command is disabled")
+      if (msg.channel.nsfw) {
+        try {
+          const response = await fetch(
+            `https://api.waifu.pics/nsfw/${args[1] ? args[1] : "waifu"}`
+          );
+          const data = await response.json();
+          if (data.message == "Not Found") {
+            msg.channel.send("Not found");
+          } else {
+            const random = new MessageEmbed()
+              .setColor("#0099ff")
+              .setImage(data.url)
+              .setTimestamp();
+            msg.channel.send({ embeds: [random] });
+          }
+        } catch (error) {
+          msg.channel.send("Sorry no waifu for pervert like you !!");
+        }
+      } else {
+        msg.reply("Go to nsfw channel u perv !!");
+      }
       break;
     //https://api.waifu.pics/sfw/waifu
     case "random":
@@ -334,30 +333,36 @@ client.on("messageCreate", async (msg) => {
           },
           {
             name: "Username",
-            value : profileUser.username,
+            value: profileUser.username,
           }
         )
         .setTimestamp();
       msg.channel.send({ embeds: [profile] });
       break;
-      //https://covid-api.mmediagroup.fr/v1/cases?country=India
-      case "covid":
+    //https://covid-api.mmediagroup.fr/v1/cases?country=India
+    case "covid":
       try {
-        const response = await fetch(`https://covid-api.mmediagroup.fr/v1/cases?country=${args[1]} ${args[2] ? args[2] : " "} ${args[3] ? args[3] : " "}` );
+        const response = await fetch(
+          `https://covid-api.mmediagroup.fr/v1/cases?country=${args[1]} ${
+            args[2] ? args[2] : " "
+          } ${args[3] ? args[3] : " "}`
+        );
         const data = await response.json();
         const covid = new MessageEmbed()
           .setColor("#0099ff")
           .setTitle(`Covid cases in ${args[1]}`)
-          
-          .setDescription(`Total conformed cases : ${data.All.confirmed} | Total Deaths : ${data.All.deaths}`)
+
+          .setDescription(
+            `Total conformed cases : ${data.All.confirmed} | Total Deaths : ${data.All.deaths}`
+          )
           .setTimestamp();
         msg.channel.send({ embeds: [covid] });
       } catch (error) {
         msg.channel.send(error);
       }
       break;
-      case "bday":
-        const bday = new MessageEmbed()
+    case "bday":
+      const bday = new MessageEmbed()
         .setColor("#0099ff")
         .setTitle(`Happy Bday Brat`)
         .setDescription(`${msg.author.username} says happy bday to  ${args[1]}`)
@@ -365,6 +370,13 @@ client.on("messageCreate", async (msg) => {
         .setFooter(`It's party time !!`)
         .setTimestamp();
       msg.channel.send({ embeds: [bday] });
+      break;
+    case "gayrate":
+      var random = Math.floor(Math.random() * 100);
+      const gayrate = new MessageEmbed()
+        .setColor("##A30000")
+        .setDescription(`${args[1]} is ${random}% gay`);
+      msg.channel.send({ embeds: [gayrate] });
       break;
   }
 });
