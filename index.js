@@ -70,7 +70,6 @@ client.on("messageCreate", async (msg) => {
   if (msg.content == "vibing") {
     msg.channel.send("https://c.tenor.com/YE0J1dQlSjcAAAAC/dance-anime.gif");
   }
-
   if (msg.content == "loli") {
     const loli = new MessageEmbed()
       .setColor("#0099ff")
