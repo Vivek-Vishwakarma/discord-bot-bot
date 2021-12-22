@@ -1,9 +1,9 @@
 require("dotenv").config();
-const { Client, Intents, MessageEmbed } = require("discord.js");
+const { Client, Intents, MessageEmbed, Collection } = require("discord.js");
 const client = new Client({
   intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
 });
-
+client.snipes = new Collection();
 const { NHentai } = require("nhentai.js-api");
 const api = new NHentai();
 
@@ -43,10 +43,19 @@ const gns = [
 
 client.on("ready", () => {
   console.log("Our bot is ready to go!!!!");
-  client.user.setActivity("Playing with Loli", { type: "PLAYING" });
+  client.user.setActivity("Playing Nothing", { type: "PLAYING" });
 });
-
+client.on("messageDelete", async (msg) => {
+  if (msg.author.bot) return;
+  client.snipes.set(msg.channel.id, {
+    content: msg.content,
+    author: msg.author.tag,
+    member: msg.member,
+    image: msg.attachments.first() ? msg.attachments.first().proxyURL : null,
+  });
+})
 client.on("messageCreate", async (msg) => {
+  
   let args = msg.content.substring(prefix.length).split(" ");
   if (msg.content == "aman") {
     msg.channel.send("Aman/Loli is sussy baka/gay everyone knows");
@@ -374,10 +383,19 @@ client.on("messageCreate", async (msg) => {
     case "gayrate":
       var random = Math.floor(Math.random() * 100);
       const gayrate = new MessageEmbed()
-        .setColor("##A30000")
+        .setColor("#A30000")
         .setDescription(`${args[1]} is ${random}% gay`);
       msg.channel.send({ embeds: [gayrate] });
       break;
+    case "snipe":
+      let message = client.snipes.get(msg.channel.id);
+      if (!message) return msg.channel.send("Nothing to snipe");
+      const embed = new MessageEmbed()
+        .setAuthor(message.author, message.member.user.displayAvatarURL())
+        .setDescription(message.content)
+        .setFooter("Get Sniped lol")
+        .setTimestamp();
+      msg.channel.send({ embeds: [embed] });
   }
 });
 
