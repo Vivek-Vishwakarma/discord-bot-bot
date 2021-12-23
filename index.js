@@ -53,9 +53,8 @@ client.on("messageDelete", async (msg) => {
     member: msg.member,
     image: msg.attachments.first() ? msg.attachments.first().proxyURL : null,
   });
-})
+});
 client.on("messageCreate", async (msg) => {
-  
   let args = msg.content.substring(prefix.length).split(" ");
   if (msg.content == "aman") {
     msg.channel.send("Aman/Loli is sussy baka/gay everyone knows");
@@ -389,12 +388,21 @@ client.on("messageCreate", async (msg) => {
     case "snipe":
       let message = client.snipes.get(msg.channel.id);
       if (!message) return msg.channel.send("Nothing to snipe");
-      const embed = new MessageEmbed()
-        .setAuthor(message.author, message.member.user.displayAvatarURL())
-        .setDescription(message.content)
-        .setFooter("Get Sniped lol")
-        .setTimestamp();
-      msg.channel.send({ embeds: [embed] });
+      if (message.image) {
+        const embed = new MessageEmbed()
+          .setAuthor(message.author, message.member.user.displayAvatarURL())
+          .setImage(message.image)
+          .setFooter("Get Sniped lol")
+          .setTimestamp();
+        msg.channel.send({ embeds: [embed] });
+      } else {
+        const embed = new MessageEmbed()
+          .setAuthor(message.author, message.member.user.displayAvatarURL())
+          .setDescription(message.content)
+          .setFooter("Get Sniped lol")
+          .setTimestamp();
+        msg.channel.send({ embeds: [embed] });
+      }
   }
 });
 
