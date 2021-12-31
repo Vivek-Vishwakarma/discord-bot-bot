@@ -395,6 +395,7 @@ client.on("messageCreate", async (msg) => {
           .setFooter("Got Sniped lol")
           .setTimestamp();
         msg.channel.send({ embeds: [embed] });
+        break;
       } else {
         const embed = new MessageEmbed()
           .setAuthor(message.author, message.member.user.displayAvatarURL())
@@ -402,7 +403,17 @@ client.on("messageCreate", async (msg) => {
           .setFooter("Got Sniped lol")
           .setTimestamp();
         msg.channel.send({ embeds: [embed] });
+        break;
       }
+      case "help":
+        const help = new MessageEmbed()
+          .setColor("#0099ff")
+          .setTitle(`Click Here`)
+          .setURL('https://vivek-vishwakarma.github.io/discord-bot-bot/Bot%20Webpage/')
+          .setTimestamp();
+        msg.channel.send({ embeds: [help] });
+        break;
+    // https://vivek-vishwakarma.github.io/discord-bot-bot/Bot%20Webpage/
   }
 });
 
