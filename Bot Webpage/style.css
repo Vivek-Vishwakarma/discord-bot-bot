@@ -1,0 +1,9 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+.table{
+    margin: 20px 40px;
+    width: 92vw !important;
+}

@@ -392,14 +392,14 @@ client.on("messageCreate", async (msg) => {
         const embed = new MessageEmbed()
           .setAuthor(message.author, message.member.user.displayAvatarURL())
           .setImage(message.image)
-          .setFooter("Get Sniped lol")
+          .setFooter("Got Sniped lol")
           .setTimestamp();
         msg.channel.send({ embeds: [embed] });
       } else {
         const embed = new MessageEmbed()
           .setAuthor(message.author, message.member.user.displayAvatarURL())
           .setDescription(message.content)
-          .setFooter("Get Sniped lol")
+          .setFooter("Got Sniped lol")
           .setTimestamp();
         msg.channel.send({ embeds: [embed] });
       }
