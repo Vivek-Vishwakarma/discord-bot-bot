@@ -405,15 +405,32 @@ client.on("messageCreate", async (msg) => {
         msg.channel.send({ embeds: [embed] });
         break;
       }
-      case "help":
-        const help = new MessageEmbed()
-          .setColor("#0099ff")
-          .setTitle(`Click Here`)
-          .setURL('https://vivek-vishwakarma.github.io/discord-bot-bot/Bot%20Webpage/')
-          .setTimestamp();
-        msg.channel.send({ embeds: [help] });
-        break;
+    case "help":
+      const help = new MessageEmbed()
+        .setColor("#0099ff")
+        .setTitle(`Click Here`)
+        .setURL(
+          "https://vivek-vishwakarma.github.io/discord-bot-bot/Bot%20Webpage/"
+        )
+        .setTimestamp();
+      msg.channel.send({ embeds: [help] });
+      break;
     // https://vivek-vishwakarma.github.io/discord-bot-bot/Bot%20Webpage/
+    case "gel":
+      try {
+        const response = await fetch(
+          `https://gelbooru.com/index.php?page=dapi&s=post&q=index&tags=${args[1]}&json=1&pid=${args[2] ? args[2] : "1"}`
+        );
+        const data = await response.json();
+        const gel = new MessageEmbed()
+          .setColor("#FF0000")
+          .setImage(data.post[Math.floor(Math.random() * 100)].file_url)
+          .setTimestamp();
+        msg.channel.send({ embeds: [gel] });
+      } catch (error) {
+        msg.channel.send("Not found");
+      }
+      break;
   }
 });
 
