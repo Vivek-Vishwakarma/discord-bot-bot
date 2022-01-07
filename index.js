@@ -365,7 +365,7 @@ client.on("messageCreate", async (msg) => {
           .setTimestamp();
         msg.channel.send({ embeds: [covid] });
       } catch (error) {
-        msg.channel.send(error);
+        msg.channel.send("Not Found");
       }
       break;
     case "bday":
@@ -419,12 +419,12 @@ client.on("messageCreate", async (msg) => {
     case "gel":
       try {
         const response = await fetch(
-          `https://gelbooru.com/index.php?page=dapi&s=post&q=index&tags=${args[1]}&json=1&pid=${args[2] ? args[2] : "1"}`
+          `https://gelbooru.com/index.php?page=dapi&s=post&q=index&tags=${args[1]}&json=1${args[3] ? `&pid=${args[3]}` : ""}`
         );
         const data = await response.json();
         const gel = new MessageEmbed()
           .setColor("#FF0000")
-          .setImage(data.post[Math.floor(Math.random() * 100)].file_url)
+          .setImage(data.post[args[2] ? args[2] : Math.floor(Math.random() * 100)].file_url)
           .setTimestamp();
         msg.channel.send({ embeds: [gel] });
       } catch (error) {
