@@ -422,9 +422,11 @@ client.on("messageCreate", async (msg) => {
           `https://gelbooru.com/index.php?page=dapi&s=post&q=index&tags=${args[1]}&json=1${args[3] ? `&pid=${args[3]}` : ""}`
         );
         const data = await response.json();
+        const search = data.post[args[2] ? args[2] : Math.floor(Math.random() * 100)]
         const gel = new MessageEmbed()
           .setColor("#FF0000")
-          .setImage(data.post[args[2] ? args[2] : Math.floor(Math.random() * 100)].file_url)
+          .setImage(search.file_url)
+          .setDescription(search.tags)
           .setTimestamp();
         msg.channel.send({ embeds: [gel] });
       } catch (error) {
