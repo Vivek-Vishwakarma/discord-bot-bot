@@ -15,6 +15,18 @@ const slaps = [
   "https://i.imgur.com/fm49srQ.gif",
   "https://c.tenor.com/PeJyQRCSHHkAAAAC/saki-saki-mukai-naoya.gif",
 ];
+const caughtgif =[
+  "https://c.tenor.com/_Gkz-2OJRrUAAAAd/pokemon-nintendo.gif",
+  "https://c.tenor.com/yiJASj0PwuIAAAAC/rattata-pokemon.gif",
+  "https://c.tenor.com/QA6mPKs100UAAAAC/caught-in.gif",
+  "https://c.tenor.com/lAz1WcGbKukAAAAd/pokeball-catch.gif"
+]
+const notcaught = [
+  "https://c.tenor.com/grBJAu58JNYAAAAC/pokemon-pokemon-go.gif",
+  "https://c.tenor.com/fVzg3wbyxxEAAAAC/pichu-teasing.gif",
+  "https://c.tenor.com/NuuCP-y__SoAAAAC/pikachu-pokemon.gif",
+  "https://c.tenor.com/Mmc_kLLUUA4AAAAC/pok%C3%A9mon-pokemon.gif"
+]
 const bonks = [
   "https://c.tenor.com/SagUV4yLAfUAAAAd/bonk-anime.gif",
   "https://i.gifer.com/origin/d7/d77de33d229370f023a24ca6e4cf6079.gif",
@@ -419,10 +431,13 @@ client.on("messageCreate", async (msg) => {
     case "gel":
       try {
         const response = await fetch(
-          `https://gelbooru.com/index.php?page=dapi&s=post&q=index&tags=${args[1]}&json=1${args[3] ? `&pid=${args[3]}` : ""}`
+          `https://gelbooru.com/index.php?page=dapi&s=post&q=index&tags=${
+            args[1]
+          }&json=1${args[3] ? `&pid=${args[3]}` : ""}`
         );
         const data = await response.json();
-        const search = data.post[args[2] ? args[2] : Math.floor(Math.random() * 100)]
+        const search =
+          data.post[args[2] ? args[2] : Math.floor(Math.random() * 100)];
         const gel = new MessageEmbed()
           .setColor("#FF0000")
           .setImage(search.file_url)
@@ -433,6 +448,30 @@ client.on("messageCreate", async (msg) => {
         msg.channel.send("Not found");
       }
       break;
+    case "catch":
+      const randomCatch = Math.floor(Math.random() * 2);
+      console.log(randomCatch)
+      if (randomCatch === 0) {
+        const caught = new MessageEmbed()
+          .setColor("#0099ff")
+          // .setTitle(`${msg.author.username} a wild  ${args[1]} ran away`)
+          .setDescription(`${msg.author.username} a wild  ${args[1]} ran away`)
+          .setImage(notcaught[Math.floor(Math.random() * 4)])
+          .setFooter(`Bruh shame on you !!`)
+          .setTimestamp();
+        msg.channel.send({ embeds: [caught] });
+        break;
+      } else {
+        const caught = new MessageEmbed()
+          .setColor("#0099ff")
+          // .setTitle(`${msg.author.username} caught a wild  ${args[1]}`)
+          .setDescription(`${msg.author.username} caught a wild  ${args[1]}`)
+          .setImage(caughtgif[Math.floor(Math.random() * 4)])
+          .setFooter(`Good Job !!`)
+          .setTimestamp();
+        msg.channel.send({ embeds: [caught] });
+        break;
+      }
   }
 });
 
