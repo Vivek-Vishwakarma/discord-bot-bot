@@ -333,7 +333,7 @@ client.on("messageCreate", async (msg) => {
           .setTimestamp();
         msg.channel.send({ embeds: [random] });
       } catch (error) {
-        msg.channel.send("Sorry no waifu for pervert like you !!");
+        msg.channel.send("Sorry no gif available !!");
       }
       break;
     //https://nekos.best/api/v1/smile
@@ -450,7 +450,6 @@ client.on("messageCreate", async (msg) => {
       break;
     case "catch":
       const randomCatch = Math.floor(Math.random() * 2);
-      console.log(randomCatch)
       if (randomCatch === 0) {
         const caught = new MessageEmbed()
           .setColor("#0099ff")
@@ -472,6 +471,24 @@ client.on("messageCreate", async (msg) => {
         msg.channel.send({ embeds: [caught] });
         break;
       }
+      case "gif":
+        try {
+          const response = await fetch(
+            `https://g.tenor.com/v1/random?q=${args[1]}&key=${process.env.TENOR}&limit=15`
+          );
+          const data = await response.json();
+          const randomNum = Math.floor(Math.random() * 16);
+          const orgif = data.results[randomNum].media[0].gif.url
+            const gif = new MessageEmbed()
+              .setColor("#00f2ff")
+              .setImage(orgif)
+              .setTimestamp();
+            msg.channel.send({ embeds: [gif] });
+        } catch (error) {
+          msg.channel.send("Sorry no gif for you !!");
+          console.log(error)
+        }
+        break;
   }
 });
 
