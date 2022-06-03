@@ -68,7 +68,7 @@ client.on("messageDelete", async (msg) => {
 });
 client.on("messageCreate", async (msg) => {
   let args = msg.content.substring(prefix.length).split(" ");
-  if (msg.content == "aman") {
+  if (msg.content.includes("aman")) {
     msg.channel.send("Aman/Loli is sussy baka/gay everyone knows");
   }
   if (msg.content == "gay") {
@@ -78,10 +78,10 @@ client.on("messageCreate", async (msg) => {
   //   msg.channel.send(912359253514264646);
   // }
   912359253514264646;
-  if (msg.content == "vibing") {
+  if (msg.content.includes("vibing")) {
     msg.channel.send("https://c.tenor.com/YE0J1dQlSjcAAAAC/dance-anime.gif");
   }
-  if (msg.content == "loli") {
+  if (msg.content.includes("loli")) {
     const loli = new MessageEmbed()
       .setColor("#0099ff")
       .setTitle("Calling FBI ...")
