@@ -71,7 +71,7 @@ client.on("messageCreate", async (msg) => {
   if (msg.content.includes("aman")) {
     msg.channel.send("Aman/Loli is sussy baka/gay everyone knows");
   }
-  if (msg.content == "gay") {
+  if (msg.content.includes("gay")) {
     msg.channel.send("no u");
   }
   // if (msg.content == "xiangling") {
@@ -81,16 +81,16 @@ client.on("messageCreate", async (msg) => {
   if (msg.content.includes("vibing")) {
     msg.channel.send("https://c.tenor.com/YE0J1dQlSjcAAAAC/dance-anime.gif");
   }
-  if (msg.content.includes("loli")) {
-    const loli = new MessageEmbed()
-      .setColor("#0099ff")
-      .setTitle("Calling FBI ...")
-      .setDescription(`${msg.author.username} u are arrested`)
-      .setImage("https://c.tenor.com/goq48dvYSFYAAAAC/fbi-calling.gif")
-      .setFooter(`Caught in 4k!`)
-      .setTimestamp();
-    msg.channel.send({ embeds: [loli] });
-  }
+  // if (msg.content.includes("loli")) {
+  //   const loli = new MessageEmbed()
+  //     .setColor("#0099ff")
+  //     .setTitle("Calling FBI ...")
+  //     .setDescription(`${msg.author.username} u are arrested`)
+  //     .setImage("https://c.tenor.com/goq48dvYSFYAAAAC/fbi-calling.gif")
+  //     .setFooter(`Caught in 4k!`)
+  //     .setTimestamp();
+  //   msg.channel.send({ embeds: [loli] });
+  // }
   switch (args[0]) {
     case "ping":
       msg.channel.send(
