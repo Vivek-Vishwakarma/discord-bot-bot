@@ -71,9 +71,9 @@ client.on("messageCreate", async (msg) => {
   if (msg.content.includes("aman")) {
     msg.channel.send("Aman/Loli is sussy baka/gay everyone knows");
   }
-  if (msg.content.includes("gay")) {
-    msg.channel.send("no u");
-  }
+  // if (msg.content.includes("gay")) {
+  //   msg.channel.send("no u");
+  // }
   // if (msg.content == "xiangling") {
   //   msg.channel.send(912359253514264646);
   // }
