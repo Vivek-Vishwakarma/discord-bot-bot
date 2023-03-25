@@ -4,29 +4,28 @@ const client = new Client({
   intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
 });
 client.snipes = new Collection();
-const { NHentai } = require("nhentai.js-api");
-const api = new NHentai();
-
 const fetch = require("node-fetch");
 const prefix = "v";
+const { Configuration, OpenAIApi } = require("openai");
+
 const slaps = [
   "https://i.pinimg.com/originals/fe/39/cf/fe39cfc3be04e3cbd7ffdcabb2e1837b.gif",
   "https://c.tenor.com/rVXByOZKidMAAAAd/anime-slap.gif",
   "https://i.imgur.com/fm49srQ.gif",
   "https://c.tenor.com/PeJyQRCSHHkAAAAC/saki-saki-mukai-naoya.gif",
 ];
-const caughtgif =[
+const caughtgif = [
   "https://c.tenor.com/_Gkz-2OJRrUAAAAd/pokemon-nintendo.gif",
   "https://c.tenor.com/yiJASj0PwuIAAAAC/rattata-pokemon.gif",
   "https://c.tenor.com/QA6mPKs100UAAAAC/caught-in.gif",
-  "https://c.tenor.com/lAz1WcGbKukAAAAd/pokeball-catch.gif"
-]
+  "https://c.tenor.com/lAz1WcGbKukAAAAd/pokeball-catch.gif",
+];
 const notcaught = [
   "https://c.tenor.com/grBJAu58JNYAAAAC/pokemon-pokemon-go.gif",
   "https://c.tenor.com/fVzg3wbyxxEAAAAC/pichu-teasing.gif",
   "https://c.tenor.com/NuuCP-y__SoAAAAC/pikachu-pokemon.gif",
-  "https://c.tenor.com/Mmc_kLLUUA4AAAAC/pok%C3%A9mon-pokemon.gif"
-]
+  "https://c.tenor.com/Mmc_kLLUUA4AAAAC/pok%C3%A9mon-pokemon.gif",
+];
 const bonks = [
   "https://c.tenor.com/SagUV4yLAfUAAAAd/bonk-anime.gif",
   "https://i.gifer.com/origin/d7/d77de33d229370f023a24ca6e4cf6079.gif",
@@ -57,6 +56,41 @@ client.on("ready", () => {
   console.log("Our bot is ready to go!!!!");
   client.user.setActivity("Playing Nothing", { type: "PLAYING" });
 });
+const configuration = new Configuration({
+  apiKey: process.env.GPT_TOKEN,
+});
+const openai = new OpenAIApi(configuration);
+// function shorten(str) {
+//   if (str.length > 1999) {
+//     return str.substring(0, 1999) + "...";
+//   } else {
+//     return str;
+//   }
+// }
+const gptQuery = async (queryPrompt) => {
+  const response = await openai
+    .createChatCompletion({
+      model: "gpt-3.5-turbo",
+      messages: [{ role: "user", content: queryPrompt }],
+    })
+    .then((response) => {
+      let res = response["data"]["choices"][0]["message"]["content"];
+      return res;
+    }); // <--- .then(response) ends here
+  return response;
+}; // <--- gptQuery() async function ends here
+
+client.on("messageCreate", async (message) => {
+  if (!message.content.startsWith("`")) {
+    return;
+  }
+  const input = message.content.slice(1).trim(); // remove the command prefix
+  const response = await gptQuery(input);
+  let res = response;
+  res.split(" ");
+  message.channel.send(response);
+});
+
 client.on("messageDelete", async (msg) => {
   if (msg.author.bot) return;
   client.snipes.set(msg.channel.id, {
@@ -66,6 +100,7 @@ client.on("messageDelete", async (msg) => {
     image: msg.attachments.first() ? msg.attachments.first().proxyURL : null,
   });
 });
+
 client.on("messageCreate", async (msg) => {
   let args = msg.content.substring(prefix.length).split(" ");
   if (msg.content.includes("aman")) {
@@ -169,14 +204,6 @@ client.on("messageCreate", async (msg) => {
       break;
     case "calc":
       msg.channel.send(`${eval(args[1])}`);
-      break;
-    case "hentai":
-      if (msg.channel.nsfw) {
-        const h = await api.random(true);
-        msg.channel.send(h.url);
-      } else {
-        msg.reply("Go to nsfw channel u perv !!");
-      }
       break;
     case "copium":
       const copium = new MessageEmbed()
@@ -447,6 +474,7 @@ client.on("messageCreate", async (msg) => {
       } catch (error) {
         msg.channel.send("Not found");
       }
+
       break;
     case "catch":
       const randomCatch = Math.floor(Math.random() * 2);
@@ -471,24 +499,29 @@ client.on("messageCreate", async (msg) => {
         msg.channel.send({ embeds: [caught] });
         break;
       }
-      case "gif":
-        try {
-          const response = await fetch(
-            `https://g.tenor.com/v1/random?q=${args[1]}&key=${process.env.TENOR}&limit=15`
-          );
-          const data = await response.json();
-          const randomNum = Math.floor(Math.random() * 16);
-          const orgif = data.results[randomNum].media[0].gif.url
-            const gif = new MessageEmbed()
-              .setColor("#00f2ff")
-              .setImage(orgif)
-              .setTimestamp();
-            msg.channel.send({ embeds: [gif] });
-        } catch (error) {
-          msg.channel.send("Sorry no gif for you !!");
-          console.log(error)
-        }
-        break;
+    case "gif":
+      try {
+        const response = await fetch(
+          `https://g.tenor.com/v1/random?q=${args[1]}&key=${process.env.TENOR}&limit=15`
+        );
+        const data = await response.json();
+        const randomNum = Math.floor(Math.random() * 16);
+        const orgif = data.results[randomNum].media[0].gif.url;
+        const gif = new MessageEmbed()
+          .setColor("#00f2ff")
+          .setImage(orgif)
+          .setTimestamp();
+        msg.channel.send({ embeds: [gif] });
+      } catch (error) {
+        msg.channel.send("Sorry no gif for you !!");
+        console.log(error);
+      }
+      break;
+    case "lobby":
+      msg.channel.send(
+        `.rd lobbies -n 2B, 9S, Angel, Astolfo, Blue, Black, Buddha, Damian, Dio, Doppo, Newgate, Elma, Escanor, Flandre, Gendo, Ghost, Gilbert, Gin, Gowther, Hatsune, Hideyoshi, Hotaru, Ikumi, Iris, Iz, Izumo, Jack, Ripper, Ego, Kei, Baji, Kenma, Kirari, Mai, Misato, Monika, Motoyasu, Muzan, Natsuki, Nico, No, Padoru, Reimu, inaba, Ritsu, Ruka,  Sukuna, Saika, Sans, Sayori, Shalltear, Shion, Shrek, Skeleton, Sora, Takehisa, Violet, Weiss, Gasai, Yuri, Aiko, miledi, kyoko sakura, yue, shizuku, kaori -r sr,ur,r`
+      );
+      break;
   }
 });
 
