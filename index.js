@@ -106,14 +106,19 @@ client.on("messageCreate", async (msg) => {
   if (msg.content.includes("aman")) {
     msg.channel.send("Aman/Loli is sussy baka/gay everyone knows");
   }
-  if (msg.content.toLowerCase().includes(".lottery")) {
+  if (msg.content.toLowerCase().startsWith(".lottery")) {
     const time = 10;
-    // msg.channel.send(
-    //   `${msg.author.username} reminder of ${time}m is set for lottery !!`
-    // );
     msg.react("✅");
     setTimeout(() => {
-      msg.channel.send(`<@${msg.author.id}> lottery cd over`); // Ping the user and send the reminder message
+      msg.channel.send(`<@${msg.author.id}> lottery cd over !!`); // Ping the user and send the reminder message
+      return;
+    }, time * 60 * 1000);
+  }
+  if (msg.content.toLowerCase().startsWith(".hourly")) {
+    const time = 60;
+    msg.react("✅");
+    setTimeout(() => {
+      msg.channel.send(`<@${msg.author.id}> hourly cd over !!`); // Ping the user and send the reminder message
       return;
     }, time * 60 * 1000);
   }
