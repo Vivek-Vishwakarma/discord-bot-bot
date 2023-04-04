@@ -106,6 +106,17 @@ client.on("messageCreate", async (msg) => {
   if (msg.content.includes("aman")) {
     msg.channel.send("Aman/Loli is sussy baka/gay everyone knows");
   }
+  if (msg.content.toLowerCase().includes(".lottery")) {
+    const time = 10;
+    // msg.channel.send(
+    //   `${msg.author.username} reminder of ${time}m is set for lottery !!`
+    // );
+    msg.react("✅");
+    setTimeout(() => {
+      msg.channel.send(`<@${msg.author.id}> lottery cd over`); // Ping the user and send the reminder message
+      return;
+    }, time * 60 * 1000);
+  }
   // if (msg.content.includes("gay")) {
   //   msg.channel.send("no u");
   // }
@@ -517,11 +528,36 @@ client.on("messageCreate", async (msg) => {
         console.log(error);
       }
       break;
-    case "lobby":
-      msg.channel.send(
-        `.rd lobbies -n 2B, 9S, Angel, Astolfo, Blue, Black, Buddha, Damian, Dio, Doppo, Newgate, Elma, Escanor, Flandre, Gendo, Ghost, Gilbert, Gin, Gowther, Hatsune, Hideyoshi, Hotaru, Ikumi, Iris, Iz, Izumo, Jack, Ripper, Ego, Kei, Baji, Kenma, Kirari, Mai, Misato, Monika, Motoyasu, Muzan, Natsuki, Nico, No, Padoru, Reimu, inaba, Ritsu, Ruka,  Sukuna, Saika, Sans, Sayori, Shalltear, Shion, Shrek, Skeleton, Sora, Takehisa, Violet, Weiss, Gasai, Yuri, Aiko, miledi, kyoko sakura, yue, shizuku, kaori -r sr,ur,r`
-      );
-      break;
+    // case "rmme":
+    //   const time = 10;
+    // if (!time || isNaN(time)) {
+    //   msg.reply("Please provide a valid time in minutes!");
+    //   return;
+    // }
+    // const reminderInterval = time * 60 * 1000; // Convert minutes to milliseconds
+    // const user = msg.author;
+    // const channel = msg.channel;
+    // const reminderMsg = args[2];
+
+    // let reminder = setInterval(() => {
+    //   channel.send(`<@${user.id}> ${reminderMsg}`); // Ping the user and send the reminder message
+    // }, reminderInterval);
+    // client.on("messageCreate", (restartMessage) => {
+    //   if (restartMessage.author.bot) return;
+    //   if (restartMessage.channel.id !== channel.id) return;
+    //   if (restartMessage.content.toLowerCase().includes(".lottery")) {
+    //     clearInterval(reminder);
+    //     restartMessage.reply("Reminder restarted!");
+    //     const newTime = parseInt(restartMessage.content.split(" ")[1]);
+    //     const newInterval = newTime * 60 * 1000;
+    //     const newReminder = setInterval(() => {
+    //       channel.send(`<@${user.id}> ${reminderMsg}`); // Ping the user and send the reminder message
+    //     }, newInterval);
+    //     reminder = newReminder;
+    //   }
+    // });
+    // msg.channel.send(`Reminder set for ${time} minutes for ${reminderMsg}`);
+    // break;
   }
 });
 
