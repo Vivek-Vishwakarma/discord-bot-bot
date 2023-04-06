@@ -60,13 +60,6 @@ const configuration = new Configuration({
   apiKey: process.env.GPT_TOKEN,
 });
 const openai = new OpenAIApi(configuration);
-// function shorten(str) {
-//   if (str.length > 1999) {
-//     return str.substring(0, 1999) + "...";
-//   } else {
-//     return str;
-//   }
-// }
 const gptQuery = async (queryPrompt) => {
   const response = await openai
     .createChatCompletion({
@@ -76,14 +69,15 @@ const gptQuery = async (queryPrompt) => {
     .then((response) => {
       let res = response["data"]["choices"][0]["message"]["content"];
       return res;
-    }); // <--- .then(response) ends here
+    });
   return response;
-}; // <--- gptQuery() async function ends here
+};
 
 client.on("messageCreate", async (message) => {
   if (!message.content.startsWith("`")) {
     return;
   }
+  message.channel.sendTyping();
   const input = message.content.slice(1).trim(); // remove the command prefix
   const response = await gptQuery(input);
   let res = response;
@@ -122,12 +116,7 @@ client.on("messageCreate", async (msg) => {
       return;
     }, time * 60 * 1000);
   }
-  // if (msg.content.includes("gay")) {
-  //   msg.channel.send("no u");
-  // }
-  // if (msg.content == "xiangling") {
-  //   msg.channel.send(912359253514264646);
-  // }
+
   912359253514264646;
   if (msg.content.includes("vibing")) {
     msg.channel.send("https://c.tenor.com/YE0J1dQlSjcAAAAC/dance-anime.gif");
@@ -533,36 +522,6 @@ client.on("messageCreate", async (msg) => {
         console.log(error);
       }
       break;
-    // case "rmme":
-    //   const time = 10;
-    // if (!time || isNaN(time)) {
-    //   msg.reply("Please provide a valid time in minutes!");
-    //   return;
-    // }
-    // const reminderInterval = time * 60 * 1000; // Convert minutes to milliseconds
-    // const user = msg.author;
-    // const channel = msg.channel;
-    // const reminderMsg = args[2];
-
-    // let reminder = setInterval(() => {
-    //   channel.send(`<@${user.id}> ${reminderMsg}`); // Ping the user and send the reminder message
-    // }, reminderInterval);
-    // client.on("messageCreate", (restartMessage) => {
-    //   if (restartMessage.author.bot) return;
-    //   if (restartMessage.channel.id !== channel.id) return;
-    //   if (restartMessage.content.toLowerCase().includes(".lottery")) {
-    //     clearInterval(reminder);
-    //     restartMessage.reply("Reminder restarted!");
-    //     const newTime = parseInt(restartMessage.content.split(" ")[1]);
-    //     const newInterval = newTime * 60 * 1000;
-    //     const newReminder = setInterval(() => {
-    //       channel.send(`<@${user.id}> ${reminderMsg}`); // Ping the user and send the reminder message
-    //     }, newInterval);
-    //     reminder = newReminder;
-    //   }
-    // });
-    // msg.channel.send(`Reminder set for ${time} minutes for ${reminderMsg}`);
-    // break;
   }
 });
 
