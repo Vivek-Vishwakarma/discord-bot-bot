@@ -95,6 +95,8 @@ client.on("messageDelete", async (msg) => {
   });
 });
 
+let lotteryArr = [];
+let hourlyArr = [];
 client.on("messageCreate", async (msg) => {
   let args = msg.content.substring(prefix.length).split(" ");
   if (msg.content.includes("aman")) {
@@ -102,19 +104,41 @@ client.on("messageCreate", async (msg) => {
   }
   if (msg.content.toLowerCase().startsWith(".lottery")) {
     const time = 10;
-    msg.react("✅");
-    setTimeout(() => {
-      msg.channel.send(`<@${msg.author.id}> lottery cd over !!`); // Ping the user and send the reminder message
+    if (!lotteryArr.includes(msg.author.id)) {
+      lotteryArr.push(msg.author.id);
+      console.log(lotteryArr);
+      msg.react("✅");
+      setTimeout(() => {
+        msg.channel.send(`<@${msg.author.id}> lottery cd over !!`); // Ping the user and send the reminder message
+        let index = lotteryArr.indexOf(msg.author.id);
+        if (index !== -1) {
+          lotteryArr.splice(index, 1);
+        }
+        return;
+      }, time * 60 * 1000);
+    } else {
+      msg.react("❌");
       return;
-    }, time * 60 * 1000);
+    }
   }
   if (msg.content.toLowerCase().startsWith(".hourly")) {
     const time = 60;
-    msg.react("✅");
-    setTimeout(() => {
-      msg.channel.send(`<@${msg.author.id}> hourly cd over !!`); // Ping the user and send the reminder message
+    if (!hourlyArr.includes(msg.author.id)) {
+      hourlyArr.push(msg.author.id);
+      console.log(hourlyArr);
+      msg.react("✅");
+      setTimeout(() => {
+        msg.channel.send(`<@${msg.author.id}> lottery cd over !!`); // Ping the user and send the reminder message
+        let index = hourlyArr.indexOf(msg.author.id);
+        if (index !== -1) {
+          hourlyArr.splice(index, 1);
+        }
+        return;
+      }, time * 60 * 1000);
+    } else {
+      msg.react("❌");
       return;
-    }, time * 60 * 1000);
+    }
   }
 
   912359253514264646;
