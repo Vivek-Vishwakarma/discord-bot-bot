@@ -128,7 +128,7 @@ client.on("messageCreate", async (msg) => {
       console.log(hourlyArr);
       msg.react("✅");
       setTimeout(() => {
-        msg.channel.send(`<@${msg.author.id}> lottery cd over !!`); // Ping the user and send the reminder message
+        msg.channel.send(`<@${msg.author.id}> hourly cd over !!`); // Ping the user and send the reminder message
         let index = hourlyArr.indexOf(msg.author.id);
         if (index !== -1) {
           hourlyArr.splice(index, 1);
